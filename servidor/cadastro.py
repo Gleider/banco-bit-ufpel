@@ -1,15 +1,15 @@
 import clientes
-import transacoes
+#import transacoes
 
 def menuPrincipal():
     while True:
         print('\n')
         titulo = 'Banco bitUfpel'
         print("=" * len(titulo), titulo, "=" * len(titulo), sep="\n")
-        print("[1] - Criar Banco de Dados (caso não exista)\n[2] - Cadastrar Nova Conta\n[3] - Realizar Transacoes\n[4] - Sair")
+        print("[1] - Criar Banco de Dados (caso não exista)\n[2] - Cadastrar Nova Conta\n[3] - Sair")
         op = input("Opção: ")
         if op.isdigit():
-            if int(op) == 4:
+            if int(op) == 3:
                 break
             elif int(op) == 1:
                 criarBD()
@@ -17,9 +17,11 @@ def menuPrincipal():
             elif int(op) == 2:
                 novaConta()
                 continue
+            '''
             elif int(op) == 3:
                 transacao()
                 continue
+            '''
         print('Opção inválida\n')
 
 def criarBD():
@@ -31,7 +33,8 @@ def novaConta():
     print("=" * len(titulo), titulo, "=" * len(titulo), sep="\n")
     clientes.menuCadastro()
     print('')
-
+    
+'''
 def transacao():
     while True:
         print('\n')
@@ -63,7 +66,8 @@ def transacao():
                 continue
             print('Opção inválida\n')
         
+'''
 
 menuPrincipal()
 clientes.conectar.close()
-transacoes.conectar.close()
+#transacoes.conectar.close()
