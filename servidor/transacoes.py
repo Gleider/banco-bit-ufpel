@@ -1,9 +1,25 @@
 import sqlite3
+import bcrypt
 
 conectar = sqlite3.connect('bancoBitUFPEL.db')
 c = conectar.cursor()
 
 class operacoes(object):
+    def login(self, numConta, senha):
+        try:
+            c.execute('Select senha from Login where numConta = ?', (numConta,))
+            dados = c.fetchone()
+            hash_senha = dados[0]
+            if bcrypt.checkpw(senha, hash_senha):
+                print('Usuário logado')
+                for row in c.execute('Select nome, cpf, saldo from Cliente where numConta = ?', (numConta,)):
+                    return row
+            else:
+                raise
+        except:
+            print('Login ou senha incorretos')
+            return -1
+        
     def saque(self, numConta, valor):
         try:         
             c.execute('Select saldo from Cliente where numConta = ?', (numConta,))
