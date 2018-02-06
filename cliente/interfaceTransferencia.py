@@ -69,7 +69,7 @@ class Transferencia(object):
         contaDigitada = str(self.entConta.get())
 
         # informar um alerta caso um dos campos não esteja preenchido
-        if not valorDigitado.isalnum() or not agenciaDigitada.isalnum() or not contaDigitada.isalnum():
+        if len(valorDigitado) == 0 or len(agenciaDigitada) == 0 or len(contaDigitada) == 0:
             messagebox.showinfo('Informação', 'Todos os campos precisam ser preenchidos')
 
         # caso todos os campos estejam preenchidos

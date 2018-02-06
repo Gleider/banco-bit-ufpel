@@ -6,10 +6,10 @@ class Saque(object):
         self.janela = janela
 
         # armazena o texto para colocar no label referente ao saldo disponível
-        self.dispo = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
+        self.valorDisponivel = usuario['saldo']
 
         # pega informações do usuário e salva nas variáveis da classe
-        self.valorDisponivel = usuario['saldo']
+        self.dispo = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
         self.user = usuario['nome'] + ' ' + usuario['sobrenome']
         self.cpf = usuario['cpf']
         self.agencia = usuario['agencia']

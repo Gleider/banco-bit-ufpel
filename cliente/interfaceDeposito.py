@@ -26,7 +26,7 @@ class Saque(object):
 
         # define a caixa de texto do valor de depósito
         self.entDeposito = Entry(janela, width='10', font=('verdana', 18))
-        self.entDeposito.place(x=510, y=200)
+        self.entDeposito.place(x=545, y=200)
 
         # define o botão de depósito
         self.btSaque = Button(janela, text='Depositar', width='10', height='3', bg='#115', fg='white',
