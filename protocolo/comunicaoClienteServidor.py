@@ -18,8 +18,8 @@ def decriptografar(conteudo):
     cript = aes.decrypt(b64decode(conteudo * 16))
     return cript
 
-serverName='192.168.1.38'
-serverPort= 1024
+serverName='192.168.1.38' #ip do servidor
+serverPort= 1024 #porta usada
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, serverPort))
 
