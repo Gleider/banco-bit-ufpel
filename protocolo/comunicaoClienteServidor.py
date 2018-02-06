@@ -1,7 +1,7 @@
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES #usado para criptografar mensagem
 from base64 import b64encode
 from base64 import b64decode
-import pickle
+import pickle #usado para transformar objeto em sequência de byte para enviar para o servidor
 from socket import *
 
 #criptografa a mensagem
