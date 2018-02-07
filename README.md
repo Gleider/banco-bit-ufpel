@@ -13,7 +13,7 @@ Isso executará o script.
 
        >> apt-get install python3-tk
 
-3 - Bcrypt. Caso não tenha digitar:
+3 - Bcrypt para python3. Caso não tenha digitar:
 
        >> pip install bcrypt
 
