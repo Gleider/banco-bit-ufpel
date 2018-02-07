@@ -18,11 +18,15 @@ Isso executará o script.
 3 - Bcrypt para python3. Caso não tenha instalar pelo pip:
 
        >> pip install bcrypt
+       
+4 - Para o Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
 
-4 - Caso não tenha o pip (gerenciador de pacotes do Python):
+       >> apt-get install build-essential libffi-dev python-dev
+
+5 - Caso não tenha o pip (gerenciador de pacotes do Python):
 
        >> apt-get install python3-pip
 
-5 - Sqlite3 (apenas para o lado do servidor). Para instalar:
+6 - Sqlite3 (apenas para o lado do servidor). Para instalar:
 
        >> apt-get install libsqlite3-dev
