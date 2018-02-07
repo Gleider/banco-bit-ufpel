@@ -21,12 +21,16 @@ Isso executará o script.
 
 3.1 Para instalar o Bcrypt:
        
-       >> pip install bcrypt
+       >> pip3 install bcrypt
 
 3.2 Caso não tenha o pip (gerenciador de pacotes do Python):
 
        >> apt-get install python3-pip
 
-4. Sqlite3 (apenas para o lado do servidor). Para instalar:
+4. PyCrypto
+
+       >> pip3 install pycrypto
+
+5. Sqlite3 (apenas para o lado do servidor). Para instalar:
 
        >> apt-get install libsqlite3-dev
