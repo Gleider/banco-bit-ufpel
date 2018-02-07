@@ -9,17 +9,16 @@ Para executar em ambiente linux, é só ir na raíz do projeto e digitar:
 Isso executará o script.
 
 # O que precisa para rodar?
-
 1. Python3
 
 2. TKinter para python3. Caso não tenha digitar:
 
        >> apt-get install python3-tk
-              
+
 3. Bcrypt para python3. Para Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
        
        >> apt-get install build-essential libffi-dev python-dev
-       
+
 3.1 Para instalar o Bcrypt:
        
        >> pip install bcrypt
