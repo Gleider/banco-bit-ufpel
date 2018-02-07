@@ -1,7 +1,7 @@
-from Crypto.Cipher import AES #usado para criptografar mensagem
+from Crypto.Cipher import AES
 from base64 import b64encode
 from base64 import b64decode
-import pickle #usado para transformar objeto em sequência de byte para enviar para o servidor
+import pickle
 from socket import *
 
 #criptografa a mensagem
@@ -18,8 +18,8 @@ def decriptografar(conteudo):
     cript = aes.decrypt(b64decode(conteudo * 16))
     return cript
 
-serverName='192.168.1.38' #ip do servidor
-serverPort= 1024 #porta usada
+serverName='192.168.0.102'
+serverPort= 1024
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, serverPort))
 
@@ -38,7 +38,7 @@ while True:
     print(msg) #mostre a mensagem recebida
     
     print('\nTESTANDO Saque')
-    vetor = [1, 1, None, 1500, None]
+    vetor = [1, 1, None, 200, None]
     s = pickle.dumps(vetor) #transforma objeto em sequência de byte
     s = criptografar(s) #criptografa a mensagem
     clientSocket.sendall(s) #envia a mensagem criptografada
@@ -58,7 +58,7 @@ while True:
     print(msg)
 
     print('\nTESTANDO Transferencia - Etapa 1')
-    vetor = [3, 1, 2, 1000, None]
+    vetor = [3, 1, 2, 100, None]
     s = pickle.dumps(vetor)
     s = criptografar(s)
     clientSocket.sendall(s)
@@ -69,7 +69,7 @@ while True:
 
     if(msg[0]==0): #Se é possível fazer o saque baseado na opção anterior
         print('\nTESTANDO Transferencia - Etapa 2')
-        vetor = [4, 1, 2, 1000, None]
+        vetor = [4, 1, 2, 100, None]
         s = pickle.dumps(vetor)
         s = criptografar(s)
         clientSocket.sendall(s)
