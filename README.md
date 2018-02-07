@@ -19,9 +19,8 @@ Isso executará o script.
 
        >> pip install bcrypt
        
-4 - Para o Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
-
-       >> apt-get install build-essential libffi-dev python-dev
+4 - Para Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
+ssential libffi-dev python-dev
 
 5 - Caso não tenha o pip (gerenciador de pacotes do Python):
 
