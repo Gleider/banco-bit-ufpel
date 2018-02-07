@@ -9,24 +9,26 @@ Para executar em ambiente linux, é só ir na raíz do projeto e digitar:
 Isso executará o script.
 
 # O que precisa para rodar?
-<li> Python3
 
-2 - TKinter para python3. Caso não tenha digitar:
+<ul>
+<li> Python3</li>
+<li>TKinter para python3. Caso não tenha digitar:</li>
 
        >> apt-get install python3-tk
               
-3 - Bcrypt para python3. Caso não tenha instalar pelo pip:
+<li><li>Bcrypt para python3. Caso não tenha instalar pelo pip:</li></li>
 
        >> pip install bcrypt
        
-3.1 - Para Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
+<li><li>Para Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:</li></li>
        
               >> apt-get install build-essential libffi-dev python-dev
 
-3.2 - Caso não tenha o pip (gerenciador de pacotes do Python):
+<li><li>Caso não tenha o pip (gerenciador de pacotes do Python):</li></li>
 
               >> apt-get install python3-pip
 
-6 - Sqlite3 (apenas para o lado do servidor). Para instalar:
+<li>Sqlite3 (apenas para o lado do servidor). Para instalar:</li>
 
        >> apt-get install libsqlite3-dev
+</ul>
