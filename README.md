@@ -8,7 +8,15 @@ Isso executará o script.
 
 # O que precisa para rodar?
 1 - Python3
-2 - TKinter para python3
-2.1 - Caso não tenha digitar:
+
+2 - TKinter para python3. Caso não tenha digitar:
+
        >> apt-get install python3-tk
 
+3 - Bcrypt. Caso não tenha digitar:
+
+       >> pip install bcrypt
+
+4 - Caso não o gerenciador de pacotes do Python (pip), digitar:
+
+       >> apt-get install python3-pip
