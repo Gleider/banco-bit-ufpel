@@ -15,7 +15,7 @@ Isso executará o script.
 
        >> apt-get install python3-tk
 
-3. Bcrypt para python3. Para Debian e o Ubuntu, o seguinte comando garante que as dependências necessárias do Bcrypt estão instaladas:
+3. Bcrypt para python3. Para Debian e Ubuntu, o seguinte comando garante as dependências necessárias do Bcrypt sejam instaladas:
        
        >> apt-get install build-essential libffi-dev python-dev
 
