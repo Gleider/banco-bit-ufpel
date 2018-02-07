@@ -1,13 +1,13 @@
 import sqlite3
 import bcrypt
 
-conectar = sqlite3.connect('bancoBitUFPEL.db')
-c = conectar.cursor()
-
 #
 #CRIA O BANCO DE DADOS
 #
 def criar_db():
+    conectar = sqlite3.connect('bancoBitUFPEL.db')
+    c = conectar.cursor()
+    
     c.execute("""
     create table if not exists Cliente (
         numConta INT UNIQUE NOT NULL, 
@@ -20,16 +20,8 @@ def criar_db():
         uf char(2) not null,
         cep char(9) not null,
         saldo decimal(10 , 2),
+        senha char(200) not null,
         primary key (numConta)
-    );
-    """)
-
-    c.execute("""
-    create table if not exists Login(
-        numConta int UNIQUE not null,
-        senha char(200) not null, 
-        primary key(numConta),
-        foreign key (numConta) references Cliente (numConta) ON DELETE CASCADE
     );
     """)
 
@@ -43,7 +35,10 @@ def valida_senha(senha_digitada, hash_senha):
 # CRIA UMA NOVA CONTA E INSERE O CLIENTE
 #
 def novaConta(nome, senha, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo):
-    quantConta = 'Select max(numConta) from Login'
+    conectar = sqlite3.connect('bancoBitUFPEL.db')
+    c = conectar.cursor()
+
+    quantConta = 'Select max(numConta) from Cliente'
         
     #Verifica se tem alguma conta cadastrada no banco de dados, se tiver atribui o número de conta 1, caso contrário a nova conta será o número da maior conta cadastrada incrementado em 1
     c.execute(quantConta)
@@ -55,9 +50,8 @@ def novaConta(nome, senha, cpf, logradouro, complemento, bairro, cidade, uf, cep
         numConta = row + 1
 
     #insere o cliente no banco de dados
-    c.execute('insert into Cliente(numConta, nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo) values (?,?,?,?,?,?,?,?,?,?)', (numConta, nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo))
-    hash_senha = bcrypt.hashpw(senha, bcrypt.gensalt())
-    c.execute('insert into Login(numConta, senha) values (?, ?)', (numConta, hash_senha))
+    hash_senha = bcrypt.hashpw(senha, bcrypt.gensalt()) #criptografa a senha
+    c.execute('insert into Cliente(numConta, nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo, senha) values (?,?,?,?,?,?,?,?,?,?,?)', (numConta, nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo, hash_senha))
     conectar.commit()
 
 
@@ -157,9 +151,12 @@ def menuCadastro():
 # DELETA CONTA
 #
 def deletarConta(numConta):
+    conectar = sqlite3.connect('bancoBitUFPEL.db')
+    c = conectar.cursor()
+    
     deleteConta = 'Delete from Cliente Where numConta = ?'
     #ativarChave = 'PRAGMA foreign_keys=ON'
-    c.execute(ativarChave)
+    #c.execute(ativarChave)
     c.execute(deleteConta, (numConta,))
     conectar.commit()
 
@@ -167,27 +164,13 @@ def deletarConta(numConta):
 #TESTE PARA SABER SE ESTA SE LOGANDO
 #
 def usuario_autenticado(numConta, senha):
-    cursor = c.execute('Select senha from Login where numConta = ?', (numConta,))
+    conectar = sqlite3.connect('bancoBitUFPEL.db')
+    c = conectar.cursor()
+    
+    cursor = c.execute('Select senha from Cliente where numConta = ?', (numConta,))
     dados = cursor.fetchone()
     hash_senha = dados[0]
     if bcrypt.checkpw(senha, hash_senha):
         print('Usuário logado')
     else:
         print('Erro ao logar')
-
-'''
-try:
-    criar_db()
-except:
-    print('Tabelas já criadas')
-'''
-
-#menuCadastro()
-#conectar.close()
-
-'''
-try:
-    deletarConta(2)
-except:
-    print('Erro ao deletar conta')
-'''

@@ -7,7 +7,7 @@ c = conectar.cursor()
 class operacoes(object):
     def login(self, numConta, senha):
         try:
-            c.execute('Select senha from Login where numConta = ?', (numConta,))
+            c.execute('Select senha from Cliente where numConta = ?', (numConta,))
             dados = c.fetchone()
             hash_senha = dados[0]
             if bcrypt.checkpw(senha, hash_senha):

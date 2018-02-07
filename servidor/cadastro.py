@@ -46,40 +46,6 @@ def consultarSenha():
     clientes.usuario_autenticado(op, senha)
     print('')
     
-'''
-def transacao():
-    while True:
-        print('\n')
-        titulo = 'Realizar Transacoes'
-        print("=" * len(titulo), titulo, "=" * len(titulo), sep="\n")
-        print("[1] - Saque\n[2] - Deposito\n[3] - Transferencia\n[4] - Voltar")
-        op = input("Opção: ")
-        if op.isdigit():
-            if int(op) == 4:
-                break
-            elif int(op) == 1:
-                numConta = int(input("Número da Conta: "))
-                valorSaque = float(input("Valor de Saque: "))
-                operacoes = transacoes.operacoes()
-                operacoes.saque(numConta, valorSaque)
-                continue
-            elif int(op) == 2:
-                numConta = int(input("Número da Conta: "))
-                valorDeposito = float(input("Valor de Depósito: "))
-                operacoes = transacoes.operacoes()
-                operacoes.deposito(numConta, valorDeposito)
-                continue
-            elif int(op) == 3:
-                numContaRem = int(input("Número da conta origem: "))
-                numContaDest = int(input("Numero da conta destino: "))
-                valor = float(input("Valor da Transferência: "))
-                operacoes = transacoes.operacoes()
-                operacoes.transferencia(numContaRem, numContaDest, valor)
-                continue
-            print('Opção inválida\n')
-        
-'''
-
 menuPrincipal()
-clientes.conectar.close()
+#clientes.conectar.close()
 #transacoes.conectar.close()
