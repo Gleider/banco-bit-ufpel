@@ -21,6 +21,6 @@ Isso executará o script.
 
        >> apt-get install python3-pip
 
-5 - Sqlite3 (apenas para o servidor) para python3. Para instalar:
+5 - Sqlite3 (apenas para o lado do servidor). Para instalar:
 
        >> apt-get install libsqlite3-dev
