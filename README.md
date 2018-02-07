@@ -17,7 +17,7 @@ Isso executará o script.
 
        >> pip install bcrypt
 
-4 - Caso não o pip (gerenciador de pacotes do Python), digitar:
+4 - Caso não tenha o pip (gerenciador de pacotes do Python):
 
        >> apt-get install python3-pip
 
