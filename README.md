@@ -4,7 +4,7 @@ Trabalho da disciplina de Redes. Criação de um banco fictício onde há intera
 # Como executar no Linux
 Para executar em ambiente linux, é só ir na raíz do projeto e digitar:
 
->> sh exec.sh
+       >> sh exec.sh
 
 Isso executará o script.
 
