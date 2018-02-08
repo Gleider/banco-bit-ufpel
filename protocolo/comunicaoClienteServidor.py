@@ -12,7 +12,7 @@ def decriptografar(conteudo):
     result = Fernet(key)
     return result.decrypt(conteudo)    
 
-serverName='192.168.0.101'
+serverName='192.168.0.2'
 serverPort= 1024
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, serverPort))
@@ -23,6 +23,7 @@ while True:
     vetor[0] = 0 #login
     vetor[1] = int(input('Entre com a conta: ')) #numConta
     vetor[4] = str.encode(input('Entre com a senha: ')) #senha
+    print(vetor)
     s = pickle.dumps(vetor) #transforma objeto em sequência de byte
     s = criptografar(s) #criptografa a mensagem
     clientSocket.sendall(s) #envia a mensagem criptografada

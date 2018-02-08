@@ -1,15 +1,15 @@
-import interfaceLogin
-import interfaceOperacoes
-import interfaceSaque
-import interfaceDeposito
-import interfaceSaldo
-import interfaceTransferencia
-import interfacePagamento
-
-from testeUsuarios import *
 from tkinter import messagebox
 
-#importa as classes referente as opções do terminal e a tela de login
+import interfaceDeposito
+import interfaceLogin
+import interfaceOperacoes
+import interfacePagamento
+import interfaceSaldo
+import interfaceSaque
+import interfaceTransferencia
+from testeUsuarios import *
+
+# importa as classes referente as opções do terminal e a tela de login
 # programa começa aqui, ele fica rodando até ser uma opção de login inválida
 while True:
     # pega informações digitadas na tela de login, retorna um dicionário referente ao usuário
