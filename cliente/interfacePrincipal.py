@@ -16,7 +16,7 @@ while True:
     login = interfaceLogin.main(usuarios)
 
     # caso o usuário seja válido
-    if login != '0':
+    if login != None:
         # entra no terminal de operações, vai retornar uma das opções escolhidas
         op = interfaceOperacoes.main(login)
 

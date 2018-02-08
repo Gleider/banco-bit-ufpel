@@ -7,8 +7,10 @@ class Operacoes(object):
     def __init__(self, janela, usuario):
         self.usuario = usuario
         self.janela = janela
+
         # armazena o nome completo
-        nome = usuario['nome'] + ' ' + usuario['sobrenome']
+        nome = usuario[1]
+
         # coloca o nome do usuário no topo
         self.lbt = Label(janela, text=nome, bg=corFundo, fg=corLetraNome, font=("Verdana", 20))
         self.lbt.place(x=300, y=50)
