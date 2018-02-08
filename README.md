@@ -27,9 +27,9 @@ Isso executará o script.
 
        >> apt-get install python3-pip
 
-4. PyCrypto
+4. Pacote de criptografia. Para instalar
 
-       >> pip3 install pycrypto
+       >> pip3 install cryptography
 
 5. Sqlite3 (apenas para o lado do servidor). Para instalar:
 

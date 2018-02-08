@@ -1,22 +1,17 @@
-import socket, pickle, transacoes
-from Crypto.Cipher import AES
-from base64 import b64decode, b64encode
+from cryptography.fernet import Fernet
+import socket, pickle, transacoes, base64
 
-#criptografar mensagem
+key = base64.urlsafe_b64encode(b'BANCOBITUFPEL0123456789ABCDEFGHI') #chave criptografica
+
 def criptografar(conteudo):
-    chave = '0123456789ABCDEF'
-    aes = AES.new(chave, AES.MODE_ECB)
-    cript = aes.encrypt(conteudo * 16)
-    return b64encode(cript)
+    result = Fernet(key)
+    return result.encrypt(conteudo)
 
-#decriptografar mensagem
 def decriptografar(conteudo):
-    chave = '0123456789ABCDEF'
-    aes = AES.new(chave, AES.MODE_ECB)
-    cript = aes.decrypt(b64decode(conteudo * 16))
-    return cript
-
-host = "172.27.34.127" #IP SERVIDOR
+    result = Fernet(key)
+    return result.decrypt(conteudo)
+    
+host = "192.168.0.101" #IP SERVIDOR
 port = 1024 #PORTA USADA
 mySocket = socket.socket()
 mySocket.bind((host,port))
@@ -61,7 +56,7 @@ while True:
                 operacoes = transacoes.operacoes()
                 result = operacoes.saque(msg[1], msg[3]) #numContaRem, valorSaque
                 if(result>=0):
-                    msgRetorno[0]=0 #Deposito realizado
+                    msgRetorno[0]=0 #Sque realizado
                     msgRetorno[9]=result
                 elif(result==-1):
                     msgRetorno[0]=1 #Erro não foi possível sacar o valor com as notas disponíveis
@@ -144,6 +139,23 @@ while True:
                 msgRetorno = pickle.dumps(msgRetorno)
                 msgRetorno = criptografar(msgRetorno)
                 conn.send(msgRetorno)
+                pass
+            
+            #PAGAMENTO
+            if(msg[0]==6):
+                print('\nPAGAMENTO')
+                operacoes = transacoes.operacoes()
+                result = operacoes.pagamento(msg[1], msg[3]) #numContaRem, valorPagamento
+                if(result>=0):
+                    msgRetorno[0]=0 #Pagamento realizado
+                    msgRetorno[9]=result
+                elif(result==-1):
+                    msgRetorno[0]=1 #Não há saldo suficiente para pagamento
+                else:
+                    msgRetorno[0]=2 #Erro Pagamento não realizado
+                msgRetorno = pickle.dumps(msgRetorno) #transformando objeto em sequencia de bytes
+                msgRetorno = criptografar(msgRetorno) #criptografando mensagem
+                conn.send(msgRetorno) #enviando mensagem
                 pass
     finally:
         print('Conexao Encerrada\n')
