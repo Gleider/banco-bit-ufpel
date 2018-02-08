@@ -5,9 +5,9 @@ operation = ['0']
 #classe para o menu de operações
 class Operacoes(object):
     def __init__(self, janela, usuario):
-        self.usuario = usuario
+        self.usuario = usuario[0]
         self.janela = janela
-
+        
         # armazena o nome completo
         nome = usuario[1]
 

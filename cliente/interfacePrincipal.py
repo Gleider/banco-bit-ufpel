@@ -8,10 +8,13 @@ import interfaceSaldo
 import interfaceSaque
 import interfaceTransferencia
 from testeUsuarios import *
+from interfaceConfig import *
+
 
 # importa as classes referente as opções do terminal e a tela de login
 # programa começa aqui, ele fica rodando até ser uma opção de login inválida
 while True:
+    
     # pega informações digitadas na tela de login, retorna um dicionário referente ao usuário
     login = interfaceLogin.main(usuarios)
 
@@ -22,7 +25,6 @@ while True:
 
         # enquanto a opção não seja de voltar para o login, ficará rodando em uma das opções do terminal
         while op != '0':
-
             # caso a opção seja de saque
             if op == '1':
                 op = interfaceSaque.main(login)
