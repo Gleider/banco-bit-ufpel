@@ -16,7 +16,7 @@ def decriptografar(conteudo):
     cript = aes.decrypt(b64decode(conteudo * 16))
     return cript
 
-host = "192.168.0.102" #IP SERVIDOR
+host = "172.27.34.127" #IP SERVIDOR
 port = 1024 #PORTA USADA
 mySocket = socket.socket()
 mySocket.bind((host,port))
