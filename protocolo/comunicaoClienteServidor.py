@@ -1,24 +1,18 @@
-from Crypto.Cipher import AES
-from base64 import b64encode
-from base64 import b64decode
-import pickle
+from cryptography.fernet import Fernet
+import base64, pickle
 from socket import *
 
-#criptografa a mensagem
+key = base64.urlsafe_b64encode(b'BANCOBITUFPEL0123456789ABCDEFGHI') #chave criptografica
+
 def criptografar(conteudo):
-    chave = '0123456789ABCDEF'
-    aes = AES.new(chave, AES.MODE_ECB)
-    cript = aes.encrypt(conteudo * 16)
-    return b64encode(cript)
+    result = Fernet(key)
+    return result.encrypt(conteudo)
 
-#descriptografa a mensagem
 def decriptografar(conteudo):
-    chave = '0123456789ABCDEF'
-    aes = AES.new(chave, AES.MODE_ECB)
-    cript = aes.decrypt(b64decode(conteudo * 16))
-    return cript
+    result = Fernet(key)
+    return result.decrypt(conteudo)    
 
-serverName='192.168.0.102'
+serverName='192.168.0.101'
 serverPort= 1024
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, serverPort))
@@ -80,6 +74,16 @@ while True:
 
     print('\nTESTANDO Informações Cadastrais')
     vetor = [5, 1, None, None, None]
+    s = pickle.dumps(vetor)
+    s = criptografar(s)
+    clientSocket.sendall(s)
+    msg = clientSocket.recv(2048)
+    msg = decriptografar(msg)
+    msg = pickle.loads(msg)
+    print(msg)
+
+    print('\nTESTANDO Pagamento')
+    vetor = [6, 1, None, 100, None]
     s = pickle.dumps(vetor)
     s = criptografar(s)
     clientSocket.sendall(s)

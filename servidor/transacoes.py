@@ -118,3 +118,23 @@ class operacoes(object):
         except:
             print('Erro ao buscar os dados cadastrais')
             return -1
+
+    def pagamento(self, numConta, valor):
+        try:         
+            c.execute('Select saldo from Cliente where numConta = ?', (numConta,))
+            saldoConta = c.fetchone()
+            saldoConta = saldoConta[0]
+            
+            if saldoConta >= valor:
+                saldoConta = saldoConta - valor
+                c.execute('Update Cliente set saldo = ? Where numConta = ?', (saldoConta, numConta,))
+                conectar.commit()
+                print('Pagamento realizado com sucesso')
+                return saldoConta
+            else:
+                print('Não há saldo suficiente para pagamento')
+                return -1
+                raise
+        except:
+            print('Pagamento não realizado')
+            return -2
