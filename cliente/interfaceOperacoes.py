@@ -9,7 +9,7 @@ class Operacoes(object):
         self.janela = janela
         
         # armazena o nome completo
-        nome = usuario[1]
+        nome = self.usuario[1]
 
         # coloca o nome do usuário no topo
         self.lbt = Label(janela, text=nome, bg=corFundo, fg=corLetraNome, font=("Verdana", 20))

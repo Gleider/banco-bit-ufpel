@@ -4,13 +4,14 @@ from interfaceConfig import *
 class Saque(object):
     def __init__(self, janela, usuario):
         self.janela = janela
-        self.usuario = usuario
+        self.usuario = usuario[0]
+        self.conta = usuario[1]
 
         # armazena o texto para colocar no label referente ao saldo disponível
-        self.dispo = 'Valor disponível: R$ {}'.format(float(usuario['saldo']))
+        self.dispo = 'Valor disponível: R$ {}'.format(float(self.usuario[9]))
 
         # pega o saldo do usuário
-        self.valorDisponivel = float(usuario['saldo'])
+        self.valorDisponivel = float(self.usuario[9])
 
         # define a mensagem do topo
         self.lbt = Label(janela, text='Depósito', bg=corFundo, fg=corLetraNome, font=("Verdana", 20))
@@ -54,17 +55,39 @@ class Saque(object):
 
         # caso a caixa de texto não esteja vazia
         else:
-            # adiciona o valor na conta
-            self.valorDisponivel += float(valorDigitado)
-            self.usuario['saldo'] = self.valorDisponivel
-            messagebox.showinfo('Informação', 'Depositado com sucesso')
+            # vetor contendo valores que serão enviados ao servidor [operacao, numContaRem, numContaDest, valor, senha]
+            vetor = [2, self.conta, None, int(valorDigitado), None]
 
-            # atualiza na label o valor disponível
-            self.lbtDisponivel['text'] = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
+            # transforma objeto em sequência de byte
+            s = pickle.dumps(vetor)
+        
+            # criptografa a mensagem
+            s = criptografar(s) 
 
-            # deixa os campos vazios
-            self.entDeposito.delete(0, END)
-            self.entDeposito.insert(0, '')
+            # envia a mensagem criptografada
+            clientSocket.sendall(s) 
+
+            # recebe o retorno
+            msg = clientSocket.recv(2048)
+
+            # decriptogrando mensagem
+            msg = decriptografar(msg) 
+
+            #transforma a sequência de byte em objeto
+            msg = pickle.loads(msg)
+
+            # caso retorne do servidor que o depósito foi realizado com sucesso
+            if msg[0] == 0:
+                messagebox.showinfo('Informação', 'Depósito realizado com sucesso')
+                self.valorDisponivel = msg[9]
+                self.lbtDisponivel['text'] = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
+                self.voltar()
+            
+            # caso retorne do servidor que o depósito não foi realizado com sucesso
+            else:
+                messagebox.showerror('Erro', 'Não foi possível realizar o depósito')
+                self.entDeposito.delete(0, END)
+                self.entDeposito.insert(0, '')
 
     # funções de voltar para a tela de operações ou voltar para a tela de login
     def voltar(self):

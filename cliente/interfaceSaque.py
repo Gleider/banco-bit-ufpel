@@ -59,7 +59,6 @@ class Saque(object):
             # vetor contendo valores que serão enviados ao servidor [operacao, numContaRem, numContaDest, valor, senha]
             vetor = [1, self.conta, None, int(valorDigitado), None]
 
-    
             # transforma objeto em sequência de byte
             s = pickle.dumps(vetor)
         
@@ -83,9 +82,8 @@ class Saque(object):
                 messagebox.showinfo('Informação', 'Saque realizado com sucesso')
                 self.valorDisponivel = msg[9]
                 self.lbtDisponivel['text'] = 'Valor disponível para saque: R$ {:.2f}'.format(float(self.valorDisponivel))
-
+                self.voltar()
                 # apaga as informações dos campos
-                self.apagaCampos()
 
             # caso o servidor tenha retornado que não tem notas disponíveis
             if msg[0] == 1:
