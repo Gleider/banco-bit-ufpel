@@ -4,10 +4,11 @@ from interfaceConfig import *
 class Pagamento(object):
     def __init__(self, janela, usuario):
         self.janela = janela
-        self.usuario = usuario
+        self.usuario = usuario[0]
+        self.conta = usuario[1]
 
         # pega o saldo do usuário
-        self.valorDisponivel = float(usuario['saldo'])
+        self.valorDisponivel = float(self.usuario[9])
 
         # armazena o texto para colocar no label referente ao saldo disponível
         self.dispo = 'Valor disponível para pagamentos: R$ {:.2f}'.format(self.valorDisponivel)
@@ -63,22 +64,35 @@ class Pagamento(object):
 
         # caso todos os campos estejam preenchidos
         else:
-            # caso o valor seja maior que o valor disponível
-            if float(valorDigitado) > self.valorDisponivel:
-                messagebox.showinfo('Informação', 'Saldo indisponível')
+            vetor = [6, self.conta, None, float(valorDigitado), None]
 
-            # caso o valor digitado esteja disponível
-            else:
-                messagebox.showinfo('Informação', 'Pagamento realizado com sucesso.\nPegue o comprovante.')
+            # transforma objeto em sequência de byte
+            s = pickle.dumps(vetor)
+        
+            # criptografa a mensagem
+            s = criptografar(s) 
 
-                # desconta o valor do pagamento do valor total
-                self.valorDisponivel -= float(valorDigitado)
-                self.usuario['saldo'] = self.valorDisponivel
+            # envia a mensagem criptografada
+            clientSocket.sendall(s) 
 
-                # atualiza o novo valor no label principal
-                self.lbtDisponivel['text'] = 'Valor disponível para saque: R$ {:.2f}'.format(float(self.valorDisponivel))
+            # recebe o retorno
+            msg = clientSocket.recv(2048)
 
-                # deixa os campos vazios
+            # decriptogrando mensagem
+            msg = decriptografar(msg) 
+
+            #transforma a sequência de byte em objeto
+            msg = pickle.loads(msg)
+
+            if msg[0] == 0:
+                messagebox.showinfo('Informação', 'Pagamento realizado')
+                self.voltar()
+            if msg[0] == 1:
+                messagebox.showerror('Erro', 'Não há saldo suficiente para o pagamento')
+                self.entValor.delete(0, END)
+                self.entValor.insert(0, '')
+            if msg[0] == 2:
+                messagebox.showerror('Erro', 'Pagamento não realizado')
                 self.entValor.delete(0, END)
                 self.entValor.insert(0, '')
 
