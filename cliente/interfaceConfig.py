@@ -11,7 +11,7 @@ from socket import *
 operation = ['0']
 
 try:
-    serverName='192.168.0.2'
+    serverName='192.168.0.7'
     serverPort= 1024
     clientSocket = socket(AF_INET, SOCK_STREAM)
     clientSocket.connect((serverName, serverPort))

@@ -44,7 +44,7 @@ class Saque(object):
         self.btSair = Button(janela, text='Sair', width='5', height='2', bg='#115', fg='white', font=('verdana', 15),
                              command=self.exit)
         self.btSair.place(x=200, y=500)
-
+        
     # função de sacar
     def sacar(self):
         #pega o valor digitado na caixa de texto de valor de saque
@@ -81,7 +81,7 @@ class Saque(object):
             if msg[0] == 0:
                 messagebox.showinfo('Informação', 'Saque realizado com sucesso')
                 self.valorDisponivel = msg[9]
-                self.lbtDisponivel['text'] = 'Valor disponível para saque: R$ {:.2f}'.format(float(self.valorDisponivel))
+                msg[9] = int(msg[9]) - int(valorDigitado)
                 self.voltar()
                 # apaga as informações dos campos
 

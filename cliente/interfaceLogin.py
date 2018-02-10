@@ -8,7 +8,6 @@ class Login(object):
         self.usuarios = usuarios
         self.janela = janela
        
-
         # armazena o texto para colocar no label referente ao texto superior
         self.lbt = Label(janela, text='Tela de Login', bg=corFundo, fg=corLetra, font=("Verdana", 24))
         self.lbt.place(x=300, y=50)
