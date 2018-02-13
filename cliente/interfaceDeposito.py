@@ -64,31 +64,34 @@ class Saque(object):
             # criptografa a mensagem
             s = criptografar(s) 
 
-            # envia a mensagem criptografada
-            clientSocket.sendall(s) 
+            try:
+                # envia a mensagem criptografada
+                clientSocket.sendall(s) 
 
-            # recebe o retorno
-            msg = clientSocket.recv(2048)
+                # recebe o retorno
+                msg = clientSocket.recv(2048)
 
-            # decriptogrando mensagem
-            msg = decriptografar(msg) 
+                # decriptogrando mensagem
+                msg = decriptografar(msg) 
 
-            #transforma a sequência de byte em objeto
-            msg = pickle.loads(msg)
+                #transforma a sequência de byte em objeto
+                msg = pickle.loads(msg)
 
-            # caso retorne do servidor que o depósito foi realizado com sucesso
-            if msg[0] == 0:
-                messagebox.showinfo('Informação', 'Depósito realizado com sucesso')
-                self.valorDisponivel = msg[9]
-                self.lbtDisponivel['text'] = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
-                self.voltar()
-            
-            # caso retorne do servidor que o depósito não foi realizado com sucesso
-            else:
-                messagebox.showerror('Erro', 'Não foi possível realizar o depósito')
-                self.entDeposito.delete(0, END)
-                self.entDeposito.insert(0, '')
-
+                # caso retorne do servidor que o depósito foi realizado com sucesso
+                if msg[0] == 0:
+                    messagebox.showinfo('Informação', 'Depósito realizado com sucesso')
+                    self.valorDisponivel = msg[9]
+                    self.lbtDisponivel['text'] = 'Valor disponível: R$ {:.2f}'.format(float(self.valorDisponivel))
+                    self.voltar()
+                
+                # caso retorne do servidor que o depósito não foi realizado com sucesso
+                else:
+                    messagebox.showerror('Erro', 'Não foi possível realizar o depósito')
+                    self.entDeposito.delete(0, END)
+                    self.entDeposito.insert(0, '')
+            except:
+                messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+                exit()
     # funções de voltar para a tela de operações ou voltar para a tela de login
     def voltar(self):
         operation[0] = '5'

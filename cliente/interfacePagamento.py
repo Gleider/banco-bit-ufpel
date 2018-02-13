@@ -71,31 +71,33 @@ class Pagamento(object):
         
             # criptografa a mensagem
             s = criptografar(s) 
+            try:
+                # envia a mensagem criptografada
+                clientSocket.sendall(s) 
 
-            # envia a mensagem criptografada
-            clientSocket.sendall(s) 
+                # recebe o retorno
+                msg = clientSocket.recv(2048)
 
-            # recebe o retorno
-            msg = clientSocket.recv(2048)
+                # decriptogrando mensagem
+                msg = decriptografar(msg) 
 
-            # decriptogrando mensagem
-            msg = decriptografar(msg) 
+                #transforma a sequência de byte em objeto
+                msg = pickle.loads(msg)
 
-            #transforma a sequência de byte em objeto
-            msg = pickle.loads(msg)
-
-            if msg[0] == 0:
-                messagebox.showinfo('Informação', 'Pagamento realizado')
-                self.voltar()
-            if msg[0] == 1:
-                messagebox.showerror('Erro', 'Não há saldo suficiente para o pagamento')
-                self.entValor.delete(0, END)
-                self.entValor.insert(0, '')
-            if msg[0] == 2:
-                messagebox.showerror('Erro', 'Pagamento não realizado')
-                self.entValor.delete(0, END)
-                self.entValor.insert(0, '')
-
+                if msg[0] == 0:
+                    messagebox.showinfo('Informação', 'Pagamento realizado')
+                    self.voltar()
+                if msg[0] == 1:
+                    messagebox.showerror('Erro', 'Não há saldo suficiente para o pagamento')
+                    self.entValor.delete(0, END)
+                    self.entValor.insert(0, '')
+                if msg[0] == 2:
+                    messagebox.showerror('Erro', 'Pagamento não realizado')
+                    self.entValor.delete(0, END)
+                    self.entValor.insert(0, '')
+            except:
+                messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+                exit()
     # funções de voltar para a tela anterior ou voltar para o login
     def voltar(self):
         operation[0] = '5'

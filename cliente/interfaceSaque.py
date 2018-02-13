@@ -64,42 +64,44 @@ class Saque(object):
         
             # criptografa a mensagem
             s = criptografar(s) 
+            try:
+                # envia a mensagem criptografada
+                clientSocket.sendall(s) 
 
-            # envia a mensagem criptografada
-            clientSocket.sendall(s) 
+                # recebe o retorno
+                msg = clientSocket.recv(2048)
 
-            # recebe o retorno
-            msg = clientSocket.recv(2048)
+                # decriptogrando mensagem
+                msg = decriptografar(msg) 
 
-            # decriptogrando mensagem
-            msg = decriptografar(msg) 
+                #transforma a sequência de byte em objeto
+                msg = pickle.loads(msg)
 
-            #transforma a sequência de byte em objeto
-            msg = pickle.loads(msg)
+                # caso o servidor tenha retornado sucesso no saque
+                if msg[0] == 0:
+                    messagebox.showinfo('Informação', 'Saque realizado com sucesso')
+                    self.valorDisponivel = msg[9]
+                    msg[9] = int(msg[9]) - int(valorDigitado)
+                    self.voltar()
+                    # apaga as informações dos campos
 
-            # caso o servidor tenha retornado sucesso no saque
-            if msg[0] == 0:
-                messagebox.showinfo('Informação', 'Saque realizado com sucesso')
-                self.valorDisponivel = msg[9]
-                msg[9] = int(msg[9]) - int(valorDigitado)
-                self.voltar()
-                # apaga as informações dos campos
-
-            # caso o servidor tenha retornado que não tem notas disponíveis
-            if msg[0] == 1:
-                messagebox.showerror('Erro', 'Não foi possível sacar o valor com as notas disponíveis')
-                self.apagaCampos()
-            
-            # caso o servidor tenha retornado que não tem saldo suficiente para saque
-            if msg[0] == 2:
-                messagebox.showerror('Erro', 'Não há saldo suficiente para saque')
-                self.apagaCampos()
-            
-            #caso o servidor tenha retornado que não foi possível realizar saque
-            if msg[0] == 3:
-                messagebox.showerror('Erro', 'Não foi possível realizar saque')
-                self.apagaCampos()
-    
+                # caso o servidor tenha retornado que não tem notas disponíveis
+                if msg[0] == 1:
+                    messagebox.showerror('Erro', 'Não foi possível sacar o valor com as notas disponíveis')
+                    self.apagaCampos()
+                
+                # caso o servidor tenha retornado que não tem saldo suficiente para saque
+                if msg[0] == 2:
+                    messagebox.showerror('Erro', 'Não há saldo suficiente para saque')
+                    self.apagaCampos()
+                
+                #caso o servidor tenha retornado que não foi possível realizar saque
+                if msg[0] == 3:
+                    messagebox.showerror('Erro', 'Não foi possível realizar saque')
+                    self.apagaCampos()
+            except:
+                messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+                exit()
     # função para apagar os campos de texto
     def apagaCampos(self):
         self.entSaque.delete(0, END)

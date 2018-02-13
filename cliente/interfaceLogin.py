@@ -53,32 +53,35 @@ class Login(object):
         # criptografa a mensagem
         s = criptografar(s) 
 
+        try:
         # envia a mensagem criptografada
-        clientSocket.sendall(s) 
+            clientSocket.sendall(s) 
 
-        # recebe o retorno
-        msg = clientSocket.recv(2048)
+            # recebe o retorno
+            msg = clientSocket.recv(2048)
 
-        # decriptogrando mensagem
-        msg = decriptografar(msg) 
+            # decriptogrando mensagem
+            msg = decriptografar(msg) 
 
-        #transforma a sequência de byte em objeto
-        msg = pickle.loads(msg)
+            #transforma a sequência de byte em objeto
+            msg = pickle.loads(msg)
 
-        # caso o retorno do servidor seja 0, então o login foi executado com sucesso
-        if(msg[0] == 0):
-            messagebox.showinfo('Informação', 'Login executado com sucesso')
+            # caso o retorno do servidor seja 0, então o login foi executado com sucesso
+            if(msg[0] == 0):
+                messagebox.showinfo('Informação', 'Login executado com sucesso')
 
-            # adiciona o retorno do servidor [0] e o número da conta [1]
-            login.append(msg)
-            login.append(vetor[1])
-            
-            self.janela.destroy()
+                # adiciona o retorno do servidor [0] e o número da conta [1]
+                login.append(msg)
+                login.append(vetor[1])
+                
+                self.janela.destroy()
 
-        # caso o retorno do servidor seja 1, então ocorreu um erro ao tentar acessar a conta
-        else:
-            messagebox.showinfo('Informação', 'Erro ao tentar acessar a conta')
-    
+            # caso o retorno do servidor seja 1, então ocorreu um erro ao tentar acessar a conta
+            else:
+                messagebox.showinfo('Informação', 'Erro ao tentar acessar a conta')
+        except:
+            messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+            exit()
     # função para encerrar a aplicação
     def exit(self):
         messagebox.showinfo('Informação', 'Saindo...')

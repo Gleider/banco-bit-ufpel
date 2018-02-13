@@ -18,32 +18,34 @@ def atualizarInfo(conta):
 
     # criptografa a mensagem
     s = criptografar(s) 
+    try:
+        # envia a mensagem criptografada
+        clientSocket.sendall(s) 
 
-    # envia a mensagem criptografada
-    clientSocket.sendall(s) 
+        # recebe o retorno
+        usuario = clientSocket.recv(2048)
 
-    # recebe o retorno
-    usuario = clientSocket.recv(2048)
+        # decriptogrando mensagem
+        usuario = decriptografar(usuario) 
 
-    # decriptogrando mensagem
-    usuario = decriptografar(usuario) 
+        #transforma a sequência de byte em objeto
+        usuario = pickle.loads(usuario)
 
-    #transforma a sequência de byte em objeto
-    usuario = pickle.loads(usuario)
-
-    return usuario
+        return usuario
+    except:
+        messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+        exit()
 # importa as classes referente as opções do terminal e a tela de login
 # programa começa aqui, ele fica rodando até ser uma opção de login inválida
 while True:
-    
+    usuarios = []
     # pega informações digitadas na tela de login, retorna um dicionário referente ao usuário
     login = interfaceLogin.main(usuarios)
-
     # caso o usuário seja válido
-    if login != None:
+    if len(login) > 0:
         # entra no terminal de operações, vai retornar uma das opções escolhidas
         op = interfaceOperacoes.main(login)
-
+        login[0] = atualizarInfo(login[1])
         # enquanto a opção não seja de voltar para o login, ficará rodando em uma das opções do terminal
         while op != '0':
             # caso a opção seja de saque
@@ -75,9 +77,9 @@ while True:
             if op == '5':
                 op = interfaceOperacoes.main(login)
                 login[0] = atualizarInfo(login[1])
+
     # caso a opção seja não especificada ou decida sair, encerra o programa
     else:
         break
 
-# mensagem de saida
-messagebox.showinfo('Informação', 'Saindo...')
+

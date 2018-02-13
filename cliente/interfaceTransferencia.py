@@ -76,73 +76,76 @@ class Transferencia(object):
             # criptografa a mensagem
             s = criptografar(s) 
 
-            # envia a mensagem criptografada
-            clientSocket.sendall(s) 
+            try:
+                # envia a mensagem criptografada
+                clientSocket.sendall(s) 
 
-            # recebe o retorno
-            msg = clientSocket.recv(2048)
+                # recebe o retorno
+                msg = clientSocket.recv(2048)
 
-            # decriptogrando mensagem
-            msg = decriptografar(msg) 
+                # decriptogrando mensagem
+                msg = decriptografar(msg) 
 
-            #transforma a sequência de byte em objeto
-            msg = pickle.loads(msg)
-            
-            # caso encontre a conta de destino
-            if msg[0] == 0:
-                # pergunta se realmente quer enviar para o destinatário
-                op = messagebox.askquestion('Informação', 'Deseja fazer a transferência para:\nNome: ' + msg[10] +
-                                                    '\nConta: ' + contaDigitada + '\nValor: ' + valorDigitado + ' R$')
-                # caso a resposta seja sim, envia para o servidor a solicitação
-                if op == 'yes':
-                    # faz uma nova solicitação confirmando a transferência
-                    vetor = [4, self.conta, int(contaDigitada), int(valorDigitado), None]
-
-                    # transforma objeto em sequência de byte
-                    s = pickle.dumps(vetor)
+                #transforma a sequência de byte em objeto
+                msg = pickle.loads(msg)
                 
-                    # criptografa a mensagem
-                    s = criptografar(s) 
+                # caso encontre a conta de destino
+                if msg[0] == 0:
+                    # pergunta se realmente quer enviar para o destinatário
+                    op = messagebox.askquestion('Informação', 'Deseja fazer a transferência para:\nNome: ' + msg[10] +
+                                                        '\nConta: ' + contaDigitada + '\nValor: ' + valorDigitado + ' R$')
+                    # caso a resposta seja sim, envia para o servidor a solicitação
+                    if op == 'yes':
+                        # faz uma nova solicitação confirmando a transferência
+                        vetor = [4, self.conta, int(contaDigitada), int(valorDigitado), None]
 
-                    # envia a mensagem criptografada
-                    clientSocket.sendall(s) 
+                        # transforma objeto em sequência de byte
+                        s = pickle.dumps(vetor)
+                    
+                        # criptografa a mensagem
+                        s = criptografar(s) 
 
-                    # recebe o retorno
-                    msg = clientSocket.recv(2048)
+                        # envia a mensagem criptografada
+                        clientSocket.sendall(s) 
 
-                    # decriptogrando mensagem
-                    msg = decriptografar(msg) 
+                        # recebe o retorno
+                        msg = clientSocket.recv(2048)
 
-                    #transforma a sequência de byte em objeto
-                    msg = pickle.loads(msg)
+                        # decriptogrando mensagem
+                        msg = decriptografar(msg) 
 
-                    # caso a transferência seja realizada com sucesso
-                    if msg[0] == 0:
-                        messagebox.showinfo('Informação', 'Transferência realizada com sucesso')
-                        self.voltar()
-                    # caso ocorra erro na transferência
+                        #transforma a sequência de byte em objeto
+                        msg = pickle.loads(msg)
+
+                        # caso a transferência seja realizada com sucesso
+                        if msg[0] == 0:
+                            messagebox.showinfo('Informação', 'Transferência realizada com sucesso')
+                            self.voltar()
+                        # caso ocorra erro na transferência
+                        else:
+                            messagebox.showerror('Erro', 'Transferência não realizada')
+                            self.limparCampo()
+                    # caso o usuário coloque em não transferir 
                     else:
-                        messagebox.showerror('Erro', 'Transferência não realizada')
-                        self.limparCampo()
-                # caso o usuário coloque em não transferir 
-                else:
-                    messagebox.showinfo('Informação', 'Transferência cancelada')
-                    self.voltar()
-            # caso a conta de destino não existir        
-            if msg[0] == 1:
-                messagebox.showerror('Erro', 'Conta de destino inexistente')
-                self.limparCampo()
-            
-            # caso não tenha saldo suficiente para transferir
-            if msg[0] == 2:
-                messagebox.showerror('Erro', 'Não há saldo suficiente para transferência')
-                self.limparCampo()
-            
-            # caso tente enviar para a própria conta
-            if msg[0] == 3:
-                messagebox.showerror('Erro', 'Conta de origem e destino são as mesmas')
-                self.limparCampo()
-            
+                        messagebox.showinfo('Informação', 'Transferência cancelada')
+                        self.voltar()
+                # caso a conta de destino não existir        
+                if msg[0] == 1:
+                    messagebox.showerror('Erro', 'Conta de destino inexistente')
+                    self.limparCampo()
+                
+                # caso não tenha saldo suficiente para transferir
+                if msg[0] == 2:
+                    messagebox.showerror('Erro', 'Não há saldo suficiente para transferência')
+                    self.limparCampo()
+                
+                # caso tente enviar para a própria conta
+                if msg[0] == 3:
+                    messagebox.showerror('Erro', 'Conta de origem e destino são as mesmas')
+                    self.limparCampo()
+            except:
+                messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+                exit()
             
     # funções de voltar para a tela de operações ou de voltar para a tela de login
     def voltar(self):
