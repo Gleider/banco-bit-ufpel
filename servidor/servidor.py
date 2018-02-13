@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-import socket, pickle, transacoes, base64
+import socket, pickle, base64
 
 key = base64.urlsafe_b64encode(b'BANCOBITUFPEL0123456789ABCDEFGHI') #chave criptografica
 
