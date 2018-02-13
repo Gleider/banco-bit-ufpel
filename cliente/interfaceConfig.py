@@ -62,9 +62,6 @@ def inicio(object, usuario=None):
     # faz com a janela apareça na tela
     janela.mainloop()
 
-def setNumConta(conta):
-    numConta = conta
-
 # funções para critografar e decriptografar as mensagens do servidor
 def criptografar(conteudo):
         result = Fernet(key)

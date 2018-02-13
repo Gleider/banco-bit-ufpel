@@ -40,48 +40,50 @@ class Login(object):
     # função para solicitar acesso de usuário no servidor
     def entrar(self):
         # pega as informações inseridas nos campos de texto
-        numConta = int(str(self.entLogin.get()))
+        numConta = str(self.entLogin.get())
         senhaCripto = str.encode(self.entSenha.get())
-        setNumConta(numConta)
-    
-        # vetor contendo valores enviados ao servidor [operacao, numContaRem, numContaDest, valor, senha]
-        vetor = [0, numConta, None, None, senhaCripto]
-    
-        # transforma objeto em sequência de byte
-        s = pickle.dumps(vetor)
+
+        if len(numConta) == 0 or len(senhaCripto) == 0:
+            messagebox.showinfo('Informação', 'Todos os campos precisam ser preenchidos')
+        else:
+            # vetor contendo valores enviados ao servidor [operacao, numContaRem, numContaDest, valor, senha]
+            vetor = [0, numConta, None, None, senhaCripto]
         
-        # criptografa a mensagem
-        s = criptografar(s) 
+            # transforma objeto em sequência de byte
+            s = pickle.dumps(vetor)
+            
+            # criptografa a mensagem
+            s = criptografar(s) 
 
-        try:
-        # envia a mensagem criptografada
-            clientSocket.sendall(s) 
+            try:
+            # envia a mensagem criptografada
+                clientSocket.sendall(s) 
 
-            # recebe o retorno
-            msg = clientSocket.recv(2048)
+                # recebe o retorno
+                msg = clientSocket.recv(2048)
 
-            # decriptogrando mensagem
-            msg = decriptografar(msg) 
+                # decriptogrando mensagem
+                msg = decriptografar(msg) 
 
-            #transforma a sequência de byte em objeto
-            msg = pickle.loads(msg)
+                #transforma a sequência de byte em objeto
+                msg = pickle.loads(msg)
 
-            # caso o retorno do servidor seja 0, então o login foi executado com sucesso
-            if(msg[0] == 0):
-                messagebox.showinfo('Informação', 'Login executado com sucesso')
+                # caso o retorno do servidor seja 0, então o login foi executado com sucesso
+                if(msg[0] == 0):
+                    messagebox.showinfo('Informação', 'Login executado com sucesso')
 
-                # adiciona o retorno do servidor [0] e o número da conta [1]
-                login.append(msg)
-                login.append(vetor[1])
-                
-                self.janela.destroy()
+                    # adiciona o retorno do servidor [0] e o número da conta [1]
+                    login.append(msg)
+                    login.append(vetor[1])
+                    
+                    self.janela.destroy()
 
-            # caso o retorno do servidor seja 1, então ocorreu um erro ao tentar acessar a conta
-            else:
-                messagebox.showinfo('Informação', 'Erro ao tentar acessar a conta')
-        except:
-            messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
-            exit()
+                # caso o retorno do servidor seja 1, então ocorreu um erro ao tentar acessar a conta
+                else:
+                    messagebox.showinfo('Informação', 'Erro ao tentar acessar a conta')
+            except:
+                messagebox.showerror('Erro', 'Não foi possível acessar o servidor')
+                exit()
     # função para encerrar a aplicação
     def exit(self):
         messagebox.showinfo('Informação', 'Saindo...')
