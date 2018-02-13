@@ -10,14 +10,14 @@ def criptografar(conteudo):
 def decriptografar(conteudo):
     result = Fernet(key)
     return result.decrypt(conteudo)
-    
-host = "192.168.0.101" #IP SERVIDOR
-port = 1024 #PORTA USADA
+
+host = [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1] #IP SERVIDOR
+port = 1026 #PORTA USADA
 mySocket = socket.socket()
 mySocket.bind((host,port))
 mySocket.listen(1)
 
-print ('Servidor Banco bitUFPEL')
+print ('Servidor Banco bitUFPEL\nConectado no ip {} e porta {}'.format(host, port))
 while True:
     conn, addr = mySocket.accept()
     print ("Conectado por: " + str(addr))
