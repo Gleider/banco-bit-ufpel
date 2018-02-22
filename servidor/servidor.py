@@ -35,7 +35,7 @@ while True:
             
             #LOGIN
             if (msg[0]==0):
-                print('\nLOGIN')
+                print('\nLogin')
                 operacoes = transacoes.operacoes()
                 result = operacoes.login(msg[1], msg[4])
                 if(result!=-1):
@@ -52,7 +52,7 @@ while True:
             
             #SAQUE
             if(msg[0]==1):
-                print('\nSAQUE')
+                print('\nSaque')
                 operacoes = transacoes.operacoes()
                 result = operacoes.saque(msg[1], msg[3]) #numContaRem, valorSaque
                 if(result>=0):
@@ -71,7 +71,7 @@ while True:
             
             #DEPOSITO
             elif(msg[0]==2):
-                print('\nDEPÓSITO')
+                print('\nDepósito')
                 operacoes = transacoes.operacoes()
                 result = operacoes.deposito(msg[1], msg[3]) #numContaRem, valorDeposito
                 if(result>=0):
@@ -86,7 +86,7 @@ while True:
             
             #TRANSFERENCIA ETAPA 1
             elif(msg[0]==3):
-                print('\nTRANSF ETP 1')
+                print('\nTransferência Etapa 1')
                 operacoes = transacoes.operacoes()
                 result = operacoes.transferencia(msg[1], msg[2], msg[3]) #numContaRem, valorDeposito
                 if(result == '-1'):
@@ -105,7 +105,7 @@ while True:
             
             #TRANSFERENCIA ETAPA 2
             elif(msg[0]==4):
-                print('\nTRANSF ETP 2')
+                print('\nTransferência Etapa 2')
                 operacoes = transacoes.operacoes()
                 result = operacoes.transferencia2(msg[1], msg[2], msg[3]) #numContaRem, valorDeposito
                 if(result == '-1'):
@@ -120,7 +120,7 @@ while True:
             
             #INFORMACOES CADASTRAIS 
             elif(msg[0]==5):
-                print('\nINFO CADASTRAIS')
+                print('\nInformações Cadastrais')
                 operacoes = transacoes.operacoes()
                 result = operacoes.infoCadastrais(msg[1]) #numContaRem, valorDeposito
                 if(result!=-1):
@@ -143,7 +143,7 @@ while True:
             
             #PAGAMENTO
             if(msg[0]==6):
-                print('\nPAGAMENTO')
+                print('\nPagamento de contas')
                 operacoes = transacoes.operacoes()
                 result = operacoes.pagamento(msg[1], msg[3]) #numContaRem, valorPagamento
                 if(result>=0):

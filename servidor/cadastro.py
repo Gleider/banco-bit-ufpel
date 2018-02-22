@@ -1,5 +1,4 @@
 import clientes
-#import transacoes
 
 def menuPrincipal():
     while True:
@@ -47,5 +46,3 @@ def consultarSenha():
     print('')
     
 menuPrincipal()
-#clientes.conectar.close()
-#transacoes.conectar.close()

@@ -66,13 +66,7 @@ class operacoes(object):
                 c.execute('Select saldo from Cliente where numConta = ?', (numContaRem,))
                 saldoRemetente = c.fetchone()
                 saldoRemetente = saldoRemetente[0]
-                
-                '''
-                c.execute('Select saldo from Cliente where numConta = ?', (numContaDest,))
-                saldoDestino = c.fetchone()
-                saldoDestino = saldoDestino[0]
-                '''
-
+        
                 if(saldoRemetente >= valor):
                     c.execute('Select nome from Cliente where numConta = ?', (numContaDest,))
                     nomeDest = c.fetchone()
@@ -105,7 +99,7 @@ class operacoes(object):
             c.execute('Update Cliente set saldo = ? Where numConta = ?', (saldoRemetente, numContaRem))
             c.execute('Update Cliente set saldo = ? Where numConta = ?', (saldoDestino, numContaDest))
             conectar.commit()
-            print('Transferencia realizada com sucesso')
+            print('Transferência realizada com sucesso')
             return saldoRemetente
         except:
             print('Transferência não realizada')
@@ -114,6 +108,7 @@ class operacoes(object):
     def infoCadastrais(self, numConta):
         try:
             for row in c.execute('Select nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo from Cliente where numConta = ?', (numConta,)):
+                print('Informações cadastrais enviadas com sucesso')
                 return row
         except:
             print('Erro ao buscar os dados cadastrais')

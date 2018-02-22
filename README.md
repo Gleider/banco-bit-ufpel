@@ -1,10 +1,14 @@
 # banco-bit-ufpel
-Trabalho da disciplina de Redes. Criação de um banco fictício onde há interação entre cliente e servidor. O projeto está sendo feito em Python.
+Trabalho da disciplina de Redes. Criação de um banco fictício onde há interação entre cliente e servidor. O projeto está sendo feito em Python, realizado por Gleider Campos e Rafael Nascimento.
 
 # Como executar no Linux
-Para executar em ambiente linux, é só ir na raíz do projeto e digitar:
+Para executar o cliente em ambiente linux, é só ir na raíz do projeto e digitar:
 
-       >> sh exec.sh
+       >> sh cliente.sh
+
+Para executar o servidor:
+
+       >> sh servidor.sh
 
 Isso executará o script.
 
