@@ -12,6 +12,8 @@ Para executar o servidor:
 
 Isso executará o script.
 
+Foram, cadastrados 11 clientes no banco (todos com a senha 123456), para facilitar os nossos testes, embora pudessem receber qualquer senha alfanumérica na hora do cadastramento. Para cadastro de novos clientes basta executar servidor/cadastro.py
+
 # O que precisa para rodar?
 1. Python3
 

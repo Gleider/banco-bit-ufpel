@@ -108,7 +108,6 @@ class operacoes(object):
     def infoCadastrais(self, numConta):
         try:
             for row in c.execute('Select nome, cpf, logradouro, complemento, bairro, cidade, uf, cep, saldo from Cliente where numConta = ?', (numConta,)):
-                print('Informações cadastrais enviadas com sucesso')
                 return row
         except:
             print('Erro ao buscar os dados cadastrais')

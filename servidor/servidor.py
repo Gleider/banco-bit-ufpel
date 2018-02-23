@@ -120,7 +120,7 @@ while True:
             
             #INFORMACOES CADASTRAIS 
             elif(msg[0]==5):
-                print('\nInformações Cadastrais')
+                #print('\nInformações Cadastrais')
                 operacoes = transacoes.operacoes()
                 result = operacoes.infoCadastrais(msg[1]) #numContaRem, valorDeposito
                 if(result!=-1):
